@@ -3,7 +3,7 @@ Feature: I can test emails are sent
   As a feature writer
   I want to easily see what emails have been delivered
   
-  Scenario: Deliver an email, and test it's properties
+  Scenario: Deliver an email, and test its properties
     Given an email "Gday" with body: "Gday Mate" is delivered to fred@gmail.com
     Then 1 email should be delivered
     And the email should not be delivered to "frood@fmail.com"
