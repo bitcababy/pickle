@@ -92,10 +92,10 @@ module Pickle
         @klass, @blueprint = klass, blueprint
         @name = @klass.name.underscore.gsub('/','_')
         @name = "#{@blueprint}_#{@name}" unless @blueprint == :master
-      end
+     end
 
       def create(attrs = {})
-        if @klass.respond_to?('make!')
+       if @klass.respond_to?('make!')
           @klass.send(:make!, @blueprint, attrs)
         else
           @klass.send(:make, @blueprint, attrs)
