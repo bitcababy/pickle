@@ -35,7 +35,11 @@ describe Pickle::Parser do
         @parser.parse_field('a: "b"').should == {'a' => 'b'}
       end
   
-      it "should raise error for invalid field 'a : b'" do
+			it "should return {'a' => Date(2012,2,15)} for 'a: 2012-02-15'" do
+				@parser.parse_field('a: 2012-02-15').should == {"a" => Date.new(2012, 2, 15)}
+      end
+
+     it "should raise error for invalid field 'a : b'" do
         lambda { @parser.parse_field('a : b') }.should raise_error(ArgumentError)
       end
     end
@@ -72,6 +76,14 @@ describe Pickle::Parser do
 
       it '("float: 10.1") should == { "float" => 10.1 }' do
         @parser.parse_fields('float: 10.1').should == {"float" => 10.1}
+      end
+
+			it "should return {'a' => Date.new(2012,2,15)} for 'a: 2012-02-15" do
+				@parser.parse_fields('date: 2012-02-15').should == {"date" => Date.new(2012, 2, 15)}
+      end
+
+			it "should return {'a' => Date.new(2012,2,15)} for 'a: Feb 15, 2012" do
+				@parser.parse_fields('date: Feb 15, 2012').should == {"date" => Date.new(2012, 2, 15)}
       end
 
       it '(\'foo: "bar", bar_man: "wonga wonga", baz_woman: "one \"two\" three", gump: 123\') should == {"foo" => "bar", "bar_man" => "wonga wonga", "gump" => 123}' do

@@ -32,32 +32,48 @@ describe Pickle::Parser::Matchers do
         end
       end
   
-      atom_should_match     :match_ordinal, ['1st', '2nd', '23rd', '104th']
-      atom_should_not_match :match_ordinal, ['1', '2']
+			atom_should_match     :match_ordinal, ['1st', '2nd', '23rd', '104th']
+			atom_should_not_match :match_ordinal, ['1', '2']
 
-      atom_should_match     :match_index, ['first', 'last', '23rd', '104th']
-      atom_should_not_match :match_index, ['1', '2', 'foo']
+			atom_should_match     :match_index, ['first', 'last', '23rd', '104th']
+			atom_should_not_match :match_index, ['1', '2', 'foo']
 
-      atom_should_match     :match_label, [': "gday"', ': "gday mate"']
-      atom_should_not_match :match_label, [': "gday""', ': gday']
-  
-      atom_should_match     :match_field, ['foo: "this is the life"', 'bar_man: "and so is this"', 'quoted_baz: "words \"in quotes\""', 'boolean: false', 'boolean: true', 'numeric: 10', 'numeric: 12.5', 'numeric: +10', 'numeric: +12.5', 'numeric: -10', 'numeric: -12.5', 'nil_field: nil']
-      atom_should_not_match :match_field, ['foo bar: "this aint workin"', 'not_numeric: --10', 'not_numeric: -ten']
-  
-      atom_should_match     :match_fields, ['foo: "bar"', 'foo: "bar", baz: "bah"']
-      atom_should_not_match :match_fields, ['foo bar: "baz"', 'email: "a", password: "b", and password_confirmation: "c"']
+			atom_should_match     :match_label, [': "gday"', ': "gday mate"']
+			atom_should_not_match :match_label, [': "gday""', ': gday']
 
-      atom_should_match     :match_model, ['a user', '1st fast car', 'the 23rd fast_car', 'the user: "fred flinstone"']
-      atom_should_not_match :match_model, ['a giraffe', 'a 1st faster car: "jim"', 'an event created']
-  
-      atom_should_match     :match_predicate, ['name', 'status', 'fancy', 'super fancy', 'super_fancy', 'style', 'super style', 'super_style']
-      atom_should_not_match :match_predicate, ['nameo', 'increment', 'not a predicate', 'has style']
-    
-      atom_should_match     :match_factory, ['user', 'fast car', 'fast_car', 'car']
-      atom_should_not_match :match_factory, ['users', 'faster car', 'event created']
-    
-      atom_should_match     :match_plural_factory, ['users', 'fast cars']
-      atom_should_not_match :match_plural_factory, ['usereres', 'fasts cars']
+			atom_should_match     :match_field, ['foo: "this is the life"', 'bar_man: "and so is this"', 'quoted_baz: "words \"in quotes\""', 'boolean: false', 'boolean: true', 'numeric: 10', 'numeric: 12.5', 'numeric: +10', 'numeric: +12.5', 'numeric: -10', 'numeric: -12.5', 'nil_field: nil']
+			atom_should_not_match :match_field, ['foo bar: "this aint workin"', 'not_numeric: --10', 'not_numeric: -ten']
+
+			atom_should_match     :match_fields, ['foo: "bar"', 'foo: "bar", baz: "bah"']
+			atom_should_not_match :match_fields, ['foo bar: "baz"', 'email: "a", password: "b", and password_confirmation: "c"']
+
+			atom_should_match     :match_model, ['a user', '1st fast car', 'the 23rd fast_car', 'the user: "fred flinstone"']
+			atom_should_not_match :match_model, ['a giraffe', 'a 1st faster car: "jim"', 'an event created']
+
+			atom_should_match     :match_predicate, ['name', 'status', 'fancy', 'super fancy', 'super_fancy', 'style', 'super style', 'super_style']
+			atom_should_not_match :match_predicate, ['nameo', 'increment', 'not a predicate', 'has style']
+
+			atom_should_match     :match_factory, ['user', 'fast car', 'fast_car', 'car']
+			atom_should_not_match :match_factory, ['users', 'faster car', 'event created']
+
+			atom_should_match     :match_plural_factory, ['users', 'fast cars']
+			atom_should_not_match :match_plural_factory, ['usereres', 'fasts cars']
+
+			atom_should_match			:match_year,		['2012']
+			atom_should_match			:match_month_num,		['01']
+			atom_should_not_match	:match_month_num,		['22']
+			atom_should_match			:match_day,			['1', '31', '15']
+			
+			atom_should_match			:match_date,		['2012-02-15', 'Feb 15, 2002']
+			atom_should_not_match	:match_date,		['32-24-48']
+			
+			atom_should_match			:match_number,		['32']
+			
+			atom_should_match			:match_value,		['32']
+			atom_should_match			:match_value,		['2012-02-15']
+			
+			atom_should_match			:match_key_and_value_in_field,	['a: "b"']
+			atom_should_match			:capture_key_and_value_in_field,	['a: 2012-02-15']
     end
   end
   
@@ -66,5 +82,7 @@ describe Pickle::Parser::Matchers do
       should_receive(:match_field).and_return('MATCH_FIELD')
       capture_field.should == '(MATCH_FIELD)'
     end
+		
   end
+	
 end
