@@ -26,7 +26,12 @@ module Pickle
     # given a string like 'foo: expr' returns {key => value}
     def parse_field(field)
       if field =~ /^#{capture_key_and_value_in_field}$/
-        { $1 => eval($2) }
+				k,v = $1,$2
+				if v =~ /^#{match_date}$/
+					{k => Date.parse(v)}
+				else
+        	{ k => eval(v) }
+				end
       else
         raise ArgumentError, "The field argument is not in the correct format.\n\n'#{field}' did not match: #{match_field}"
       end
