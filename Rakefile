@@ -17,4 +17,5 @@ Dir["Rakefile.d/*.rake"].sort.each {|t| load_tasks t}
 
 task :default => :spec
 
-task :ci => ['rcov:verify', 'cucumber']
+# This no longer works
+# task :ci => ['rcov:verify', 'cucumber']
