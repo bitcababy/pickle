@@ -7,6 +7,7 @@
 Gemfile.lock
 cucumber_test_app
 pickle-email*
+coverage*
 
 # built docs
 .yardoc
